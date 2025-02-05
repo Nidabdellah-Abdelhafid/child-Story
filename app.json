@@ -1,23 +1,23 @@
 {
   "expo": {
-    "name": "movies-app",
-    "slug": "movies-app",
+    "name": "Child Story",
+    "slug": "child_Story",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon1.png",
-    "scheme": "myapp",
+    "icon": "./assets/images/icon3.png",
+    "scheme": "child_Story",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true,
-      "package": "com.jsm.movies-app"
+      "package": "com.jsm.childStory-app"
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon1.png",
+        "foregroundImage": "./assets/images/adaptive-icon3.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.hafidnid.moviesapp"
+      "package": "com.hafidnid.childStoryapp"
     },
     "web": {
       "bundler": "metro",
@@ -29,19 +29,20 @@
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images/adaptive-icon1.png",
+          "image": "./assets/images/adaptive-icon3.png",
           "imageWidth": 200,
           "resizeMode": "contain",
-          "backgroundColor": "#000000"
+          "backgroundColor": "#1c1549"
         }
-      ]
+      ],
+      "expo-sqlite"
     ],
     "experiments": {
       "typedRoutes": true
     },
     "extra": {
       "eas": {
-        "projectId": "9b8e5b69-4ca0-4bc5-bc8a-0fce5934e0c7"
+        "projectId": "91809e1d-ff62-44ce-988c-a9a40c0d693f"
       }
     }
   }
