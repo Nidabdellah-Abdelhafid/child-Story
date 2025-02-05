@@ -9,7 +9,7 @@ import * as SQLite from 'expo-sqlite';
 
 
 
-const HF_API_KEY = "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";
+const HF_API_KEY = "HF_API_KEY";
 
 const NewStory = () => {
   
