@@ -33,7 +33,7 @@ export default function RoutLayout() {
         
           }} />
       <Stack.Screen name='newStory' options={{
-            headerTitle: "Add your story",
+            headerTitle: "Define your story",
             headerBackground: () => (
               <View style={{backgroundColor: '#170f48',
                 height: 100,
@@ -42,7 +42,7 @@ export default function RoutLayout() {
             ),
             headerTintColor: '#eab308',
             headerLeft: () => (
-              <TouchableOpacity style={{ marginRight: 70 }} onPress={() => router.push("/")} className='flex-row justify-center items-center'>
+              <TouchableOpacity style={{ marginRight: 65 }} onPress={() => router.push("/")} className='flex-row justify-center items-center'>
                 <Ionicons name="chevron-back-sharp" size={24} color="#eab308" />
                 <Text className='text-yellow-500'>Home</Text>
               </TouchableOpacity>

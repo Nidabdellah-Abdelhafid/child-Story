@@ -32,10 +32,23 @@
           "image": "./assets/images/adaptive-icon3.png",
           "imageWidth": 200,
           "resizeMode": "contain",
-          "backgroundColor": "#1c1549"
+          "backgroundColor": "#000b17"
         }
       ],
-      "expo-sqlite"
+      [
+        "expo-sqlite",
+        {
+          "enableFTS": true,
+          "useSQLCipher": true,
+          "android": {
+            "enableFTS": false,
+            "useSQLCipher": false
+          },
+          "ios": {
+            "customBuildFlags": ["-DSQLITE_ENABLE_DBSTAT_VTAB=1 -DSQLITE_ENABLE_SNAPSHOT=1"]
+          }
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true

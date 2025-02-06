@@ -5,16 +5,16 @@ import { createUser } from "../lib/appwrite";
 import { FontAwesome } from '@expo/vector-icons'; 
 import * as Animatable from "react-native-animatable";
 import { SafeAreaView } from "react-native-safe-area-context";
-import StoryGenerator from "./storyGenerator";
+import {View } from "react-native";
 import Home from "./home";
 
 const App = () => {
   
   return (
     <>
-      <SafeAreaView style={{ flex: 1 }}>
+      <View style={{ flex: 1 }}>
       <Home />
-      </SafeAreaView>
+      </View>
       <StatusBar style="light" />
     </>
   );

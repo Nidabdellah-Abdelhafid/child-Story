@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { LinearGradient } from 'expo-linear-gradient'
-import { View, Text, TextInput, ScrollView, ActivityIndicator, TouchableOpacity } from "react-native";
+import { View, Text, TextInput, ScrollView, ActivityIndicator, TouchableOpacity ,Modal} from "react-native";
 import Slider from '@react-native-community/slider';
 import { AntDesign } from '@expo/vector-icons';
 import { router } from 'expo-router';
@@ -9,7 +9,7 @@ import * as SQLite from 'expo-sqlite';
 
 
 
-const HF_API_KEY = "HF_API_KEY";
+const HF_API_KEY = "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";
 
 const NewStory = () => {
   
@@ -21,9 +21,10 @@ const NewStory = () => {
   const [characters, setCharacters] = useState([""]);
   const [story, setStory] = useState("");
   const [loading, setLoading] = useState(false);
-  const [speaking, setSpeaking] = useState(false);
+  const [showLanguagePicker, setShowLanguagePicker] = useState(false);
   const [storyTitle, setStoryTitle] = useState("");
   const [database,setDatabase]= useState();
+
 
   const initial= async()=>{
     try{
@@ -88,7 +89,7 @@ const NewStory = () => {
             "Authorization": `Bearer ${HF_API_KEY}`,
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ "inputs": prompt }),
+          body: JSON.stringify({ inputs: prompt }),
         }
       );
   
@@ -156,9 +157,9 @@ const NewStory = () => {
       <ScrollView contentContainerStyle={{ padding: 20 }} className="px-1">
         
         {/* Child's Name & Story Language */}
-        <View className="flex-row justify-between">
+        <View className="flex-row justify-between mb-14 mt-4">
           <View className="w-[48%]">
-            <Text className="text-white mb-1 font-bold">Child's name:</Text>
+            <Text className="text-white mb-1 font-bold text-lg">Child's name:</Text>
             <TextInput 
               className="border border-yellow-500 text-white rounded-md p-3" 
               placeholder="Enter name" 
@@ -168,19 +169,33 @@ const NewStory = () => {
             />
           </View>
           <View className="w-[48%]">
-            <Text className="text-white mb-1 font-bold">Story language:</Text>
-            <TextInput 
-              className="border border-yellow-500 text-white rounded-md p-3" 
-              placeholder="English/French" 
-              placeholderTextColor="#999"
-              value={storyLanguage} 
-              onChangeText={setStoryLanguage} 
-            />
-          </View>
+          <Text className="text-white mb-1 font-bold text-lg">Story language:</Text>
+
+          <TouchableOpacity 
+            className="border border-yellow-500 text-white rounded-md p-3 flex-row justify-between items-center"
+            onPress={() => setShowLanguagePicker(true)} // Open language picker
+          >
+            <Text className="text-white">{storyLanguage}</Text>
+            <AntDesign name="down" size={16} color="white" />
+          </TouchableOpacity>
+
+          {/* Language Selection Modal */}
+          {showLanguagePicker && (
+            <View className="absolute top-14 left-0 right-0 bg-[#1c1549] border border-yellow-500 rounded-md p-2">
+              <TouchableOpacity onPress={() => { setStoryLanguage('English'); setShowLanguagePicker(false); }}>
+                <Text className="text-white p-2">English</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => { setStoryLanguage('French'); setShowLanguagePicker(false); }}>
+                <Text className="text-white p-2">French</Text>
+              </TouchableOpacity>
+            </View>
+          )}
+        </View>
+
         </View>
 
         {/* Child's Age */}
-        <Text className="text-white mt-5 font-bold">Child's age: {childAge} years</Text>
+        <Text className="text-white mt-5 font-bold text-lg">Child's age: {childAge} years</Text>
         <Slider 
           minimumValue={2} 
           maximumValue={10} 
@@ -193,12 +208,12 @@ const NewStory = () => {
         />
 
         {/* Gender Selection */}
-        <Text className="text-white mt-5 font-bold">Gender:</Text>
+        <Text className="text-white mt-5 font-bold text-lg">Gender:</Text>
         <View className="flex-row mt-2">
           {['Boy', 'Girl'].map((option) => (
             <TouchableOpacity 
               key={option} 
-              className={`px-4 py-2 rounded-full mx-1 ${
+              className={`px-8 py-4 rounded-full mx-2 ${
                 gender === option ? 'bg-yellow-500' : 'bg-transparent border border-yellow-400'
               }`}
               onPress={() => setGender(option)}
@@ -209,9 +224,9 @@ const NewStory = () => {
         </View>
 
         {/* Story Setting */}
-        <Text className="text-white mt-5 font-bold">Where does the story play?</Text>
+        <Text className="text-white mt-7 font-bold text-lg">Where does the story play?</Text>
         <TextInput 
-          className="border border-yellow-500 text-white rounded-md p-3 mt-2" 
+          className="border border-yellow-500 text-white rounded-md p-4 mt-2" 
           placeholder="Enter location" 
           placeholderTextColor="#999"
           value={storySetting} 
@@ -219,7 +234,7 @@ const NewStory = () => {
         />
 
         {/* Additional Characters */}
-        <Text className="text-white mt-5 font-bold">Additional characters:</Text>
+        <Text className="text-white mt-7 font-bold text-lg">Additional characters:</Text>
         {characters.map((char, index) => (
           <View key={index} className="flex-row items-center mt-2">
             <TextInput 
@@ -245,23 +260,22 @@ const NewStory = () => {
 
         {/* Dream Up Story Button */}
         <TouchableOpacity className="bg-yellow-500 py-4 rounded-full mt-6 flex-row items-center justify-center" onPress={()=>{generateStory();}}>
-          <Text className="text-white font-bold text-lg">Dream Up Story</Text>
+          <Text className="text-white font-bold text-2xl">Dream Up Story</Text>
           <Text className="ml-2">✨</Text>
         </TouchableOpacity>
-        {loading && <ActivityIndicator size="large" color="#facc15" className="mt-5" />}
-              {/* {storyTitle ? <Text className="text-xl font-bold text-center text-purple-700 mt-5">{storyTitle}</Text> : null}
-             
-              {story ? <Text className="mt-5 text-lg leading-6">{story}</Text> : null}
-
-              {story && (
-                <View className="mt-5">
-                  {!speaking ? (
-                    <Button title="🎙️ Read Story Aloud" onPress={speakStory} />
-                  ) : (
-                    <Button title="⏹️ Stop Speaking" onPress={stopSpeaking} color="red" />
-                  )}
-                </View>
-              )} */}
+        {loading &&
+        <Modal 
+        transparent
+        animationType="fade"
+      >
+        <View className="flex-1 justify-center items-center bg-black/60">
+          <View className=" p-5 rounded-lg w-72">
+          <ActivityIndicator size={70} color="#facc15" className="mt-5" />
+          </View>
+          </View>
+        </Modal>
+        }
+          
       </ScrollView>
     </LinearGradient>
       
